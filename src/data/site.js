@@ -4,7 +4,7 @@ export const SITE = {
   phone: '5215632188414',
   email: 'nexoramultimedianc@gmail.com',
   instagram: 'https://instagram.com/nexoramultimedia',
-  facebook: 'https://www.facebook.com/profile.php?id=61590305086626',
+  facebook: 'https://www.facebook.com/share/1D4o4xFvMw/?mibextid=wwXIfr',
   location: 'México',
   year: new Date().getFullYear(),
 }
