@@ -1,0 +1,21 @@
+:root {
+  --bg: #f5f0e7;
+  --surface: #f8f3eb;
+  --text: #171717;
+  --muted: #8e8578;
+  --line: #ddd2c2;
+  --gold: #c8a56a;
+  --dark: #101010;
+  --white: #fffdf8;
+
+  --container: 1360px;
+  --narrow: 1180px;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.06);
+
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Montserrat', Arial, sans-serif;
+}
