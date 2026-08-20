@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import PageShell from '../components/layout/PageShell'
 import { portfolioData } from '../data/portfolioData'
-import { useUserContext } from '../context/UserContext'
-import { buildWhatsAppLink } from '../utils/whatsapp'
+import { useWhatsAppLink } from '../hooks/useWhatsAppLink'
 import { useRouteMeta } from '../hooks/useRouteMeta'
 
 function HeroCarousel({ images, title }) {
@@ -93,7 +92,7 @@ function HeroCarousel({ images, title }) {
 
 function PortfolioCategory() {
   const { slug } = useParams()
-  const { userData } = useUserContext()
+  const whatsappLink = useWhatsAppLink()
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [showFullGallery, setShowFullGallery] = useState(false)
 
@@ -159,10 +158,7 @@ function PortfolioCategory() {
               <p className="detail-intro">{item.intro}</p>
               <p className="detail-description">{item.description}</p>
               <a
-                href={buildWhatsAppLink({
-                  userData,
-                  label: item.whatsappLabel || item.title,
-                })}
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-dark"
@@ -294,10 +290,7 @@ function PortfolioCategory() {
               Cuéntame tu idea por WhatsApp y te propongo una ruta visual clara para tu proyecto.
             </p>
             <a
-              href={buildWhatsAppLink({
-                userData,
-                label: item.whatsappLabel || item.title,
-              })}
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-dark"

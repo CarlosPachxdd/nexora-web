@@ -1,18 +1,12 @@
-import { buildWhatsAppLink } from '../../utils/whatsapp'
-import { useUserContext } from '../../context/UserContext'
+import { useWhatsAppLink } from '../../hooks/useWhatsAppLink'
 
 function FloatingWhatsApp() {
-  const { userData } = useUserContext()
+  const whatsappLink = useWhatsAppLink()
 
   return (
     <a
       className="floating-wa"
-      href={buildWhatsAppLink({
-        nombre: userData.nombre,
-        evento: userData.evento,
-        source: userData.source,
-        campaign: userData.campaign,
-      })}
+      href={whatsappLink}
       target="_blank"
       rel="noreferrer"
       aria-label="Cotizar por WhatsApp"
