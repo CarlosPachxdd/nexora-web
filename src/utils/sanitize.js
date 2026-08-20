@@ -1,6 +1,6 @@
 // Eventos permitidos — deben coincidir con los slugs de portfolioData
 const ALLOWED_EVENTS = [
-  'boda',
+  'bodas',
   'xv',
   'otros-eventos',
   'producto',
@@ -9,7 +9,6 @@ const ALLOWED_EVENTS = [
   'eventos-corporativos',
   'reels',
   'branding',
-  'corporativo',
 ]
 
 export function sanitizeText(value = '') {
