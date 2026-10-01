@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import PageShell from '../components/layout/PageShell'
 import { portfolioData } from '../data/portfolioData'
@@ -90,6 +90,41 @@ function HeroCarousel({ images, title }) {
   )
 }
 
+function HeroVideo({ src, poster }) {
+  const videoRef = useRef(null)
+  const [isMuted, setIsMuted] = useState(true)
+
+  const toggleMute = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = !video.muted
+    setIsMuted(video.muted)
+  }
+
+  return (
+    <div className="hero-video">
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
+      <button
+        type="button"
+        className="hero-video-mute-btn"
+        onClick={toggleMute}
+        aria-label={isMuted ? 'Activar sonido' : 'Silenciar video'}
+      >
+        {isMuted ? '🔇' : '🔊'}
+      </button>
+    </div>
+  )
+}
+
 function PortfolioCategory() {
   const { slug } = useParams()
   const whatsappLink = useWhatsAppLink()
@@ -132,7 +167,14 @@ function PortfolioCategory() {
   const parentRoute = item.parent === 'social' ? '/social' : '/empresas'
   const testimonial = item.testimonials?.[activeTestimonial]
   const heroGallery = item.gallery?.slice(0, 5) || []
-  const fullGallery = item.fullGallery?.length ? item.fullGallery : item.gallery || []
+  const rawFullGallery = item.fullGallery?.length ? item.fullGallery : item.gallery || []
+  // Si hay video de highlights, la galería completa puede mostrar todo sin
+  // problema (el video ya no repite ninguna foto). Si NO hay video todavía
+  // (sigue el carrusel de fotos), quitamos de la galería completa las fotos
+  // que ya se ven arriba, para no repetirlas dos veces.
+  const fullGallery = item.highlightVideo
+    ? rawFullGallery
+    : rawFullGallery.filter((image) => !heroGallery.includes(image))
 
   return (
     <PageShell>
@@ -167,7 +209,11 @@ function PortfolioCategory() {
               </a>
             </div>
 
-            <HeroCarousel images={heroGallery} title={item.title} />
+            {item.highlightVideo ? (
+              <HeroVideo src={item.highlightVideo} poster={heroGallery[0]} />
+            ) : (
+              <HeroCarousel images={heroGallery} title={item.title} />
+            )}
           </section>
 
           {fullGallery.length > 0 && (

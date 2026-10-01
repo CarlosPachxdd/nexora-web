@@ -11,8 +11,13 @@ const ALLOWED_EVENTS = [
   'branding',
 ]
 
-export function sanitizeText(value = '') {
-  return String(value)
+export function sanitizeText(value) {
+  // OJO: los valores por defecto de JS (value = '') solo aplican con
+  // undefined, NUNCA con null — y URLSearchParams.get() devuelve null
+  // cuando el parámetro no existe. Por eso se comprueba explícitamente.
+  const safeValue = value === null || value === undefined ? '' : value
+
+  return String(safeValue)
     .replace(/<[^>]*>?/gm, '')
     .replace(/[^\p{L}\p{N}\s._-]/gu, '')
     .trim()
